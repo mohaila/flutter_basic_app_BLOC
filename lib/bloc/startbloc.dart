@@ -5,27 +5,24 @@ import 'disposable.dart';
 class StartBloc implements Disposable {
   int _counter;
 
-  final _counterController = StreamController<int>();
-  final _actionController = StreamController();
+  final _controller = StreamController<bool>();
 
-  get _add => _counterController.sink.add;
+  get _add => _controller.sink.add;
 
-  Stream<int> get countStream => _counterController.stream;
+  Stream<bool> get buildStream => _controller.stream;
 
-  get incrementCounter => _actionController.sink.add;
+  int get counter => _counter;
 
   StartBloc() {
     _counter = 0;
-    _actionController.stream.listen(_handleLogic);
   }
 
   void dispose() {
-    _actionController.close();
-    _counterController.close();
+    _controller.close();
   }
 
-  void _handleLogic(data) {
+  void incrementCounter() {
     _counter = _counter + 1;
-    _add(_counter);
+    _add(true);
   }
 }

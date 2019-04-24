@@ -11,12 +11,11 @@ class StartView extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(title: Text('BLOC Basic App')),
       body: Center(
-        child: StreamBuilder<int>(
-          stream: bloc.countStream,
-          initialData: 0,
-          builder: (BuildContext context, AsyncSnapshot<int> snapshot) {
+        child: StreamBuilder<bool>(
+          stream: bloc.buildStream,
+          builder: (BuildContext context, AsyncSnapshot<bool> snapshot) {
             return Text(
-              '${snapshot.data}',
+              '${bloc.counter}',
               style: TextStyle(
                 fontSize: 64,
               ),
@@ -27,7 +26,7 @@ class StartView extends StatelessWidget {
       floatingActionButton: FloatingActionButton(
         child: const Icon(Icons.add),
         onPressed: () {
-          bloc.incrementCounter(null);
+          bloc.incrementCounter();
         },
       ),
     );
